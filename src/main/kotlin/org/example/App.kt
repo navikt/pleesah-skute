@@ -13,7 +13,7 @@ fun main() {
             }
             get("/isReady") {
                 call.respondText("OK")
-            }
+            } // remove later
         }
     }.start(wait = true)
 }
