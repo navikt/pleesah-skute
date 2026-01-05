@@ -31,6 +31,14 @@ java {
 
 application {
     mainClass.set(pleesahMainClass)
+    applicationDefaultJvmArgs = listOf(
+        "--enable-native-access=ALL-UNNAMED", // For å stilne logger fra Netty
+        "--add-opens", "java.base/jdk.internal.misc=ALL-UNNAMED",
+        "--add-opens", "java.base/sun.nio.ch=ALL-UNNAMED",
+        "-XX:+UnlockDiagnosticVMOptions",
+        "-Dio.netty.tryReflectionSetAccessible=true",
+        "--sun-misc-unsafe-memory-access=allow" // Suppress sun.misc.Unsafe warnings
+    )
 }
 
 tasks {
