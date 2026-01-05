@@ -23,4 +23,4 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais.yaml
-          VAR: image=${{ steps.docker-build-push.outputs.image }} #
+          VAR: image=${{ steps.docker-build-push.outputs.image }}
