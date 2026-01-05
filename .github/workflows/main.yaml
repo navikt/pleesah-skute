@@ -18,7 +18,7 @@ jobs:
           distribution: 'temurin'
           java-version: '24'
       - name: Build project
-        run: ./gradlew build
+        run: gradle build
       - name: Build and push image and SBOM to OCI registry
         uses: nais/docker-build-push@v0
         id: docker-build-push
