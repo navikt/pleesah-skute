@@ -1,0 +1,17 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: pleesah-skute
+  namespace: leesah-quiz
+spec:
+  ingresses:
+    - https://pleesah-skute.dev.nav.cloud.nais.io
+  image: {{image}} #
+  port: 8080
+  replicas:
+    max: 1
+    min: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
