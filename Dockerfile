@@ -11,4 +11,4 @@ ENV JAVA_OPTS='-XX:MaxRAMPercentage=90'
 COPY build/libs/*.jar ./
 
 USER nonroot
-CMD ["pleesah-skute.jar"]
+CMD ["app.jar"]

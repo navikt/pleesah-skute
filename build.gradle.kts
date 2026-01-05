@@ -1,4 +1,6 @@
 val ktorVersion = "3.3.3"
+val pleesahMainClass = "org.example.AppKt"
+
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -28,5 +30,25 @@ java {
 }
 
 application {
-    mainClass = "org.example.AppKt"
+    mainClass.set(pleesahMainClass)
+}
+
+tasks {
+    withType<Jar> {
+        archiveBaseName.set("app")
+
+        manifest {
+            attributes["Main-Class"] = pleesahMainClass
+            attributes["Class-Path"] =
+                configurations.runtimeClasspath.get().joinToString(separator = " ") {
+                    it.name
+                }
+        }
+        doLast {
+            configurations.runtimeClasspath.get().forEach {
+                val file = File("${layout.buildDirectory.get()}/libs/${it.name}")
+                if (!file.exists()) it.copyTo(file)
+            }
+        }
+    }
 }
