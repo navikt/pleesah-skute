@@ -6,7 +6,7 @@ metadata:
 spec:
   ingresses:
     - https://pleesah-skute.dev.nav.cloud.nais.io
-  image: {{ image }}
+  image: {{image}}
   port: 8080
   replicas:
     max: 1
