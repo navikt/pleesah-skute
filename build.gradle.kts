@@ -21,14 +21,6 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-testing {
-    suites {
-        val test by getting(JvmTestSuite::class) {
-            useKotlinTest("2.2.20")
-        }
-    }
-}
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(24)
