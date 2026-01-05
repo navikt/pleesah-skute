@@ -10,4 +10,4 @@ ENV JAVA_OPTS='-XX:MaxRAMPercentage=90'
 
 COPY build/libs/*.jar ./
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["-jar","app.jar"]
