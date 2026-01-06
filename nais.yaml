@@ -16,3 +16,8 @@ spec:
       memory: 32Mi
   readiness:
     path: /isReady
+  env:
+    - name: HEV_ANKER
+      value: "true"
+  envFrom:
+    - secret: seilet-mitt

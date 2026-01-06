@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36241210-ec4d-41c1-be55-b1d4edd22d11" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/pod.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nais.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/nais.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/example/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/example/App.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +32,11 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="pleesah-skute" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="pleesah-skute" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
             </expand>
             <select />
@@ -77,6 +84,8 @@
   "keyToString": {
     "Docker.Dockerfile.executor": "Run",
     "Gradle.Build pleesah-skute.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "KUBERNETES_SUPPRESS_CONFIG_CLUSTER_SUGGESTION": "true",
     "Ktor.AppKt.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
@@ -119,7 +128,7 @@
       <option name="includeProvidedScope" value="false" />
       <option name="mainClass" value="org.example.AppKt" />
       <option name="passParentEnvs" value="true" />
-      <option name="programParameters" value="" />
+      <option name="programParameters" />
       <option name="shortenCommandLine" />
       <option name="vmParameters" />
       <option name="workingDirectory" value="$PROJECT_DIR$" />

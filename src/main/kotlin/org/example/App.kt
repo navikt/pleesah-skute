@@ -13,7 +13,7 @@ fun main() {
     embeddedServer(Netty, 8080) {
         routing {
             get("/isAlive") {
-                call.respondText("OK")
+                sjekkAlivenessProbe(this)
             }
             get("/isReady") {
                 sjekkReadinessProbe(this)
@@ -32,9 +32,21 @@ fun sjekkReadinessProbe(context: RoutingContext) {
             context.call.respondText("Ankeret er hevet")
         } else {
             log.info("HEV_ANKER er ikke satt til true")
-            context.call.respondText(status = HttpStatusCode.TooEarly, text = "HEV_ANKER er ikke satt til true")
+            context.call.respondText(status = HttpStatusCode.NotImplemented, text = "HEV_ANKER er ikke satt til true")
         }
     }
 }
 
+fun sjekkAlivenessProbe(context: RoutingContext) {
+    runBlocking {
+        val seil = System.getenv("SETT_SEIL")
+        if (seil == "true") {
+            log.info("Seilet er satt")
+            context.call.respondText("Seilet er satt")
+        } else {
+            log.info("SETT_SEIL er ikke satt til true")
+            context.call.respondText(status = HttpStatusCode(510, description = "Not extended"), text = "SETT_SEIL er ikke satt til true")
+        }
+    }
+}
 
