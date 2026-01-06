@@ -42,10 +42,10 @@ fun sjekkAlivenessProbe(context: RoutingContext) {
         val seil = System.getenv("SETT_SEIL")
         if (seil == "true") {
             log.info("Seilet er satt")
-            context.call.respondText("Seilet er satt")
+            context.call.respondText("Seilet er hevet")
         } else {
-            log.info("SETT_SEIL er ikke satt til true")
-            context.call.respondText(status = HttpStatusCode(510, description = "Not extended"), text = "SETT_SEIL er ikke satt til true")
+            log.info("SETT_SEIL secreten er ikke satt til true")
+            context.call.respondText(status = HttpStatusCode(510, description = "Not extended"), text = "SETT_SEIL secreten er ikke satt til true")
         }
     }
 }

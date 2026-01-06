@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36241210-ec4d-41c1-be55-b1d4edd22d11" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pod.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nais.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/nais.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/example/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/example/App.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
