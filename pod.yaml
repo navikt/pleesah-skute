@@ -3,24 +3,10 @@ kind: Pod
 metadata:
   name: pleesah-skute
   namespace: leesah-quiz
-  labels:
-    app: pleesah-skute
 spec:
   containers:
     - name: pleesah-skute
-      securityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-            - ALL
-        privileged: false
-        readOnlyRootFilesystem: true
-        runAsGroup: 1069
-        runAsNonRoot: true
-        runAsUser: 1069
-        seccompProfile:
-          type: RuntimeDefault
-      image: europe-north1-docker.pkg.dev/nais-management-233d/leesah-quiz/pleesah-skute:2026.01.06-09.20-5726070
+      image: # <INSERT IMAGE HERE>
       ports:
         - containerPort: 8080
       resources:

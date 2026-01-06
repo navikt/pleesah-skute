@@ -1,6 +1,6 @@
 package org.example
 
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
@@ -29,10 +29,13 @@ fun sjekkReadinessProbe(context: RoutingContext) {
         val anker = System.getenv("HEV_ANKER")
         if (anker == "true") {
             log.info("Ankeret er hevet")
-            context.call.respondText("Ankeret er hevet")
+            context.call.respondText(status = HttpStatusCode.OK, text = "Ankeret er hevet")
         } else {
             log.info("HEV_ANKER er ikke satt til true")
-            context.call.respondText(status = HttpStatusCode.NotImplemented, text = "HEV_ANKER er ikke satt til true")
+            context.call.respondText(
+                status = HttpStatusCode.NotImplemented,
+                text = "HEV_ANKER er ikke satt til true"
+            )
         }
     }
 }
@@ -45,7 +48,10 @@ fun sjekkAlivenessProbe(context: RoutingContext) {
             context.call.respondText("Seilet er hevet")
         } else {
             log.info("SETT_SEIL secreten er ikke satt til true")
-            context.call.respondText(status = HttpStatusCode(510, description = "Not extended"), text = "SETT_SEIL secreten er ikke satt til true")
+            context.call.respondText(
+                status = HttpStatusCode(510, description = "Not extended"),
+                text = "SETT_SEIL secreten er ikke satt til true"
+            )
         }
     }
 }
