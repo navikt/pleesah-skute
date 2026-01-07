@@ -17,12 +17,15 @@ spec:
         httpGet:
           port: 8080
           path: /isReady
+      livenessProbe:
+        httpGet:
+          port: 8080
+          path: /isAlive
       env:
         - name: HAR_KASTET_LOSS
           value: "true"
-        - name: SETT_SEIL
+        - name: HAR_SATT_SEIL
           valueFrom:
             secretKeyRef:
               name: seilet-mitt
-              key: SETT_SEIL
-              optional: true
+              key: HAR_SATT_SEIL
