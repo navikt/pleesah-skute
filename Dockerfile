@@ -9,4 +9,4 @@ ENV JAVA_OPTS='-XX:MaxRAMPercentage=90 -Dorg.slf4j.simpleLogger.log.io.ktor=erro
 
 COPY build/libs/*.jar ./
 
-CMD ["-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
