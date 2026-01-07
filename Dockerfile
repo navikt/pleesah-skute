@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java24-debian12
+FROM cgr.dev/chainguard/jdk
 
 WORKDIR /app
 
