@@ -18,7 +18,7 @@ spec:
           port: 8080
           path: /isReady
       env:
-        - name: HEV_ANKER
+        - name: HAR_KASTET_LOSS
           value: "true"
         - name: SETT_SEIL
           valueFrom:

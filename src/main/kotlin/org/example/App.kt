@@ -26,15 +26,17 @@ val log: Logger = LoggerFactory.getLogger("main")
 
 fun sjekkReadinessProbe(context: RoutingContext) {
     runBlocking {
-        val anker = System.getenv("HEV_ANKER")
-        if (anker == "true") {
-            log.info("Ankeret er hevet")
-            context.call.respondText(status = HttpStatusCode.OK, text = "Ankeret er hevet")
+        val loss = System.getenv("HAR_KASTET_LOSS")
+        if (loss == "true") {
+            log.info("Hurra! Du har kastet loss og skuta er klar for å plyndre")
+            context.call.respondText(status = HttpStatusCode.OK, text = "Hurra! Du har kastet loss og skuta er klar for å plyndre")
         } else {
-            log.info("HEV_ANKER er ikke satt til true")
+            log.info(
+                "Skuta er fortsatt fortøyd til havna og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Kubernetes bruker en readiness probe for å sjekke om poden er klar for å ta imot trafikk. I denne oppgaven har vi gjort det slik at skuta krever at en miljøvariabel HAR_KASTET_LOSS er satt til 'true'. I den virkelige verden vil det være opp til hver enkelt å bestemme hvordan gi beskjed til kubernetes om at poden er klar."
+            )
             context.call.respondText(
                 status = HttpStatusCode.NotImplemented,
-                text = "HEV_ANKER er ikke satt til true"
+                text = "Skuta er fortsatt fortøyd til havna og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Kubernetes bruker en readiness probe for å sjekke om poden er klar for å ta imot trafikk. I denne oppgaven har vi gjort det slik at skuta krever at en miljøvariabel HAR_KASTET_LOSS er satt til 'true'. I den virkelige verden vil det være opp til hver enkelt å bestemme hvordan gi beskjed til kubernetes om at poden er klar."
             )
         }
     }
