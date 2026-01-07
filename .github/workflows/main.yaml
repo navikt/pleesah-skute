@@ -36,4 +36,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/navikt/pleesah-skute/pleesah-skute:latest
+          tags: ghcr.io/navikt/pleesah-skute:latest
