@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: pleesah-skute
-      image: # <INSERT IMAGE HERE>
+      image: ghcr.io/navikt/pleesah-skute:latest
       ports:
         - containerPort: 8080
       resources:
