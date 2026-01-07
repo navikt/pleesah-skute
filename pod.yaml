@@ -24,8 +24,8 @@ spec:
       env:
         - name: HAR_KASTET_LOSS
           value: "true"
-        - name: HAR_SATT_SEIL
+        - name: HAR_SATT_KURS
           valueFrom:
             secretKeyRef:
-              name: seilet-mitt
-              key: HAR_SATT_SEIL
+              name: koordinatene-mine
+              key: HAR_SATT_KURS
