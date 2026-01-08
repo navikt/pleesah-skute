@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: pleesah-skute
-  namespace: leesah-quiz
+  name: skutetuta
+  namespace: tania
 spec:
   containers:
-    - name: pleesah-skute
+    - name: skute
       image: ghcr.io/navikt/pleesah-skute:latest
       ports:
         - containerPort: 8080
@@ -17,10 +17,6 @@ spec:
         httpGet:
           port: 8080
           path: /isReady
-      livenessProbe:
-        httpGet:
-          port: 8080
-          path: /isAlive
       env:
         - name: HAR_KASTET_LOSS
           value: "true"
@@ -28,4 +24,4 @@ spec:
           valueFrom:
             secretKeyRef:
               name: koordinatene-mine
-              key: HAR_SATT_KURS
+              key: KOORDINATER

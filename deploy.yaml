@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: armanda-shanda
+  labels:
+    app: armanda-shanda
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: armanda-shanda
+  template:
+    metadata:
+      labels:
+        app: armanda-shanda
+    spec:
+      containers:
+        - name: skute
+          image: ghcr.io/navikt/pleesah-skute:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /isReady
+          env:
+            - name: HAR_KASTET_LOSS
+              value: "true"
+            - name: HAR_SATT_KURS
+              valueFrom:
+                secretKeyRef:
+                  name: koordinatene-mine
+                  key: KOORDINATER
