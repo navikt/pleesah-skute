@@ -32,7 +32,7 @@ fun sjekkReadinessProbe(context: RoutingContext) {
             sjekkSecret()
             context.call.respond(HttpStatusCode.OK)
         } else {
-            log.info("Oppgave 3: Skuta er fortsatt fortøyd til havna og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Kubernetes bruker en readiness probe for å sjekke om poden er klar for å ta imot trafikk. I denne oppgaven har vi gjort det slik at skuta krever at en miljøvariabel HAR_KASTET_LOSS er satt til 'true'. I den virkelige verden vil det være opp til hver enkelt å bestemme hvordan gi beskjed til kubernetes om at poden er klar.")
+            log.info("Oppgave 3: Skuta er fortsatt fortøyd til havna og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Skuta krever at en miljøvariabel HAR_KASTET_LOSS er satt til 'true'. Gå tilbake til oppgavearket og følg instruksjonene.")
             context.call.respond(HttpStatusCode.NotImplemented)
         }
     }
@@ -43,7 +43,7 @@ fun sjekkSecret() {
     if (hemmelighet == "59.9124° N, 10.7962° E") {
         log.info("Kursen er satt og du er endelig på vei til din destinasjon!")
     } else {
-        log.info("Oppgave 4: Men hvor skal vi, egentlig? Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i vår instans finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig desinasjon. Skip o'hoi!")
+        log.info("Oppgave 4: Men hvor skal vi, egentlig? Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i dette tilfellet finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig destinasjon. Gå tilbake til oppgavearket og følg instruksjonene. Skip o’hoi!")
     }
 }
 
