@@ -43,7 +43,7 @@ fun sjekkSecret() {
     if (hemmelighet == "59.9124° N, 10.7962° E") {
         log.info("Kursen er satt og du er endelig på vei til din destinasjon!")
     } else {
-        log.info("Oppgave 4: Men hvor skal vi, egentlig? Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i vår instans finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig desinasjon")
+        log.info("Oppgave 4: Men hvor skal vi, egentlig? Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i vår instans finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig desinasjon. Skip o'hoi!")
     }
 }
 
