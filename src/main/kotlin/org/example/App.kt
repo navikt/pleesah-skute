@@ -43,12 +43,11 @@ fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.
 
 fun sjekkReadinessProbe(
     context: RoutingContext,
-    baseUrl: Url = Url("leesah.io/kubernetes"),
     client: HttpClient = HttpClient(CIO),
     harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
-        val response: HttpResponse = client.request(baseUrl)
+        val response: HttpResponse = client.request(Url("leesah.io/kubernetes"))
 
         if (harKastetLoss == "true") {
             log.info("Oppgave 5: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
