@@ -90,6 +90,21 @@ class AppTest {
         assertEquals(HttpStatusCode.ServiceUnavailable, response.status)
     }
 
+    @Test
+    fun `isReady returns 503 Service Unavailable when HAR_KASTET_LOSS is ikke satt`() = testApplication {
+        application {
+            routing {
+                get("/isReady") {
+                    sjekkReadinessProbe(this, harKastetLoss = null)
+                }
+            }
+        }
+
+        val response = client.get("/isReady")
+
+        assertEquals(HttpStatusCode.ServiceUnavailable, response.status)
+    }
+
     private fun mockHttpClient(handler: MockRequestHandleScope.(HttpRequestData) -> HttpResponseData) =
         HttpClient(MockEngine) {
             engine {

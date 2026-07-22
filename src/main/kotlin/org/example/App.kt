@@ -2,6 +2,7 @@ package org.example
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -12,6 +13,7 @@ import io.ktor.server.routing.*
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.IOException
 
 fun main() {
     embeddedServer(Netty, 8080) {
@@ -28,6 +30,14 @@ fun main() {
 
 val log: Logger = LoggerFactory.getLogger("main")
 
+private val readinessClient = HttpClient(CIO) {
+    install(HttpTimeout) {
+        requestTimeoutMillis = 1_000
+        connectTimeoutMillis = 1_000
+        socketTimeoutMillis = 1_000
+    }
+}
+
 fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")) {
     runBlocking {
         if (harKastetLoss == "true") {
@@ -43,21 +53,29 @@ fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.
 
 fun sjekkReadinessProbe(
     context: RoutingContext,
-    client: HttpClient = HttpClient(CIO),
+    client: HttpClient = readinessClient,
     harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
         if (harKastetLoss == "true") {
             log.info("Oppgave 5: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
-            val response: HttpResponse = client.request(Url("https://leesah.io/kubernetes"))
-            if (response.status.isSuccess()) {
-                context.call.respond(HttpStatusCode.OK)
-            } else {
+            try {
+                val response: HttpResponse = client.request(Url("https://leesah.io/kubernetes"))
+                if (response.status.isSuccess()) {
+                    context.call.respond(HttpStatusCode.OK)
+                } else {
+                    context.call.respond(HttpStatusCode.ServiceUnavailable)
+                }
+            } catch (e: HttpRequestTimeoutException) {
+                log.warn("Readiness-kallet mot leesah.io/kubernetes timet ut", e)
+                context.call.respond(HttpStatusCode.ServiceUnavailable)
+            } catch (e: IOException) {
+                log.warn("Readiness-kallet mot leesah.io/kubernetes feilet", e)
                 context.call.respond(HttpStatusCode.ServiceUnavailable)
             }
         } else {
             log.info("Du har ikke kastet loss")
-            context.call.respond(HttpStatusCode.NotImplemented)
+            context.call.respond(HttpStatusCode.ServiceUnavailable)
         }
     }
 }
@@ -72,5 +90,4 @@ fun sjekkSecret() {
         )
     }
 }
-
 
