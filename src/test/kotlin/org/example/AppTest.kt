@@ -63,7 +63,7 @@ class AppTest {
         application {
             routing {
                 get("/isReady") {
-                    sjekkReadinessProbe(this, havnesjefUrl = "http://havnesjef.test/teams", client = mockClient)
+                    sjekkReadinessProbe(this, baseUrl = Url("http://havnesjef.test/teams"), client = mockClient)
                 }
             }
         }
@@ -80,7 +80,7 @@ class AppTest {
         application {
             routing {
                 get("/isReady") {
-                    sjekkReadinessProbe(this, havnesjefUrl = "http://havnesjef.test/teams", client = mockClient)
+                    sjekkReadinessProbe(this, baseUrl = Url("http://havnesjef.test/teams"), client = mockClient)
                 }
             }
         }
