@@ -44,12 +44,11 @@ fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.
 
 fun sjekkReadinessProbe(
     context: RoutingContext,
-    baseUrl: Url = Url(System.getenv("HAVNESJEF_URL") ?: "http://havnesjef.pleesah-system"),
-    havnesjefUrl: String ="${baseUrl}/teams",
+    baseUrl: Url = Url("leesah.io/kubernetes"),
     client: HttpClient = HttpClient(CIO)
 ) {
     runBlocking {
-        val response: HttpResponse = client.request(havnesjefUrl)
+        val response: HttpResponse = client.request(baseUrl)
 
         if (response.status.isSuccess()) {
             context.call.respond(HttpStatusCode.OK)
