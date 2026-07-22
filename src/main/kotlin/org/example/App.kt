@@ -56,6 +56,8 @@ fun sjekkReadinessProbe(
             } else {
                 context.call.respond(HttpStatusCode.ServiceUnavailable)
             }
+        } else {
+            log.info("Du har ikke kastet loss")
         }
     }
 }
@@ -66,8 +68,7 @@ fun sjekkSecret() {
         log.info("Kursen er satt og du er endelig på vei til din destinasjon!")
     } else {
         log.info(
-            "Oppgave 6: Hurra! Du har kastet loss og er klar til å plyndre! Men hvor skal vi, egentlig? " +
-                    "Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i dette tilfellet finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig destinasjon. Gå tilbake til oppgavearket og følg instruksjonene. Skip o’hoi!"
+            "Oppgave 6: Hurra! Du har kastet loss og er klar til å plyndre! Men hvor skal vi, egentlig? " + "Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i dette tilfellet finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig destinasjon. Gå tilbake til oppgavearket og følg instruksjonene. Skip o’hoi!"
         )
     }
 }
