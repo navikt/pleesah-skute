@@ -30,14 +30,6 @@ fun main() {
 
 val log: Logger = LoggerFactory.getLogger("main")
 
-private val readinessClient = HttpClient(CIO) {
-    install(HttpTimeout) {
-        requestTimeoutMillis = 1_000
-        connectTimeoutMillis = 1_000
-        socketTimeoutMillis = 1_000
-    }
-}
-
 fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")) {
     runBlocking {
         if (harKastetLoss == "true") {
@@ -53,14 +45,14 @@ fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.
 
 fun sjekkReadinessProbe(
     context: RoutingContext,
-    client: HttpClient = readinessClient,
+    client: HttpClient = HttpClient(CIO),
     harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
         if (harKastetLoss == "true") {
             log.info("Oppgave 5: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
             try {
-                val response: HttpResponse = client.request(Url("https://leesah.io/kubernetes"))
+                val response: HttpResponse = client.request(Url("https://leesah.io/kubernetes/"))
                 if (response.status.isSuccess()) {
                     context.call.respond(HttpStatusCode.OK)
                 } else {
