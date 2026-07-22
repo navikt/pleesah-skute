@@ -57,6 +57,7 @@ fun sjekkReadinessProbe(
             }
         } else {
             log.info("Du har ikke kastet loss")
+            context.call.respond(HttpStatusCode.NotImplemented)
         }
     }
 }
