@@ -31,3 +31,7 @@ build
 
 .idea/
 .ai
+
+# lokale testfiler
+pod.yaml
+deployment.yaml
