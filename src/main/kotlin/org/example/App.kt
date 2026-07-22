@@ -49,7 +49,7 @@ fun sjekkReadinessProbe(
     runBlocking {
         if (harKastetLoss == "true") {
             log.info("Oppgave 5: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
-            val response: HttpResponse = client.request(Url("leesah.io/kubernetes"))
+            val response: HttpResponse = client.request(Url("https://leesah.io/kubernetes"))
             if (response.status.isSuccess()) {
                 context.call.respond(HttpStatusCode.OK)
             } else {
