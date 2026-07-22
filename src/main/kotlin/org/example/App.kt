@@ -1,6 +1,7 @@
 package org.example
 
 import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -11,7 +12,6 @@ import io.ktor.server.routing.*
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import io.ktor.client.engine.cio.*
 
 fun main() {
     embeddedServer(Netty, 8080) {
@@ -31,7 +31,6 @@ val log: Logger = LoggerFactory.getLogger("main")
 fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")) {
     runBlocking {
         if (harKastetLoss == "true") {
-            sjekkSecret()
             context.call.respond(HttpStatusCode.OK)
         } else {
             log.info(
@@ -45,15 +44,19 @@ fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.
 fun sjekkReadinessProbe(
     context: RoutingContext,
     baseUrl: Url = Url("leesah.io/kubernetes"),
-    client: HttpClient = HttpClient(CIO)
+    client: HttpClient = HttpClient(CIO),
+    harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
         val response: HttpResponse = client.request(baseUrl)
 
-        if (response.status.isSuccess()) {
-            context.call.respond(HttpStatusCode.OK)
-        } else {
-            context.call.respond(HttpStatusCode.ServiceUnavailable)
+        if (harKastetLoss == "true") {
+            log.info("Oppgave 5: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
+            if (response.status.isSuccess()) {
+                context.call.respond(HttpStatusCode.OK)
+            } else {
+                context.call.respond(HttpStatusCode.ServiceUnavailable)
+            }
         }
     }
 }
