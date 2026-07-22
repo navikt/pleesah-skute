@@ -1,4 +1,4 @@
-val ktorVersion = "3.3.3"
+val ktorVersion = "3.5.1"
 val pleesahMainClass = "org.example.AppKt"
 
 
@@ -17,10 +17,14 @@ dependencies {
 
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-client-core:${ktorVersion}")
+    implementation("io.ktor:ktor-client-cio:${ktorVersion}")
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("org.slf4j:slf4j-simple:2.0.17")
     testImplementation(kotlin("test"))
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
 java {
@@ -42,6 +46,13 @@ application {
 }
 
 tasks {
+    register<JavaExec>("runMockHavnesjef") {
+        group = "application"
+        description = "Kjører en lokal test-dobbel for havnesjef.pleesah-system/teams"
+        mainClass.set("org.example.MockHavnesjefKt")
+        classpath = sourceSets["test"].runtimeClasspath
+    }
+
     withType<Jar> {
         archiveBaseName.set("app")
 
