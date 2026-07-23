@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory
 @Serializable
 data class SecretMessage(val message: String)
 
+private var teller = 0
+
 fun main() {
   embeddedServer(Netty, 8080) {
       install(ContentNegotiation) {
@@ -66,8 +68,11 @@ fun sjekkReadinessProbe(
     harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
-        if (harKastetLoss == "true") {
-            log.info("Oppgave 5: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
+        if (harKastetLoss == "true" ) {
+            if (teller == 0) {
+                log.info("Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
+                teller++
+            }
             try {
                 val response: HttpResponse = client.request(Url("https://leesah.io/kubernetes/"))
                 if (response.status.isSuccess()) {
@@ -84,7 +89,7 @@ fun sjekkReadinessProbe(
             }
         } else {
             log.info("Du har ikke kastet loss")
-            context.call.respond(HttpStatusCode.ServiceUnavailable)
+            context.call.respond(HttpStatusCode.NotImplemented)
         }
     }
 }
