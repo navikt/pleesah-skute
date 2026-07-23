@@ -57,7 +57,7 @@ class AppTest {
     }
 
     @Test
-    fun `isReady returns 200 OK when havnesjef svarer med suksess`() = testApplication {
+    fun `isReady returns 200 OK when leesah svarer med suksess`() = testApplication {
         val mockClient = mockHttpClient { respond("[]", HttpStatusCode.OK) }
 
         application {
@@ -74,7 +74,7 @@ class AppTest {
     }
 
     @Test
-    fun `isReady returns 503 Service Unavailable when havnesjef svarer med feil`() = testApplication {
+    fun `isReady returns 503 Service Unavailable when leesah svarer med feil`() = testApplication {
         val mockClient = mockHttpClient { respond("feil", HttpStatusCode.InternalServerError) }
 
         application {
@@ -91,7 +91,7 @@ class AppTest {
     }
 
     @Test
-    fun `isReady returns 503 Service Unavailable when HAR_KASTET_LOSS is ikke satt`() = testApplication {
+    fun `isReady returns 501 Not Implemented when HAR_KASTET_LOSS is ikke satt`() = testApplication {
         application {
             routing {
                 get("/isReady") {
