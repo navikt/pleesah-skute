@@ -1,34 +1,51 @@
 package org.example
 
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.*
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.server.application.install
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.request.receive
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.io.IOException
+import kotlinx.serialization.Serializable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.IOException
+
+@Serializable
+data class SecretMessage(val message: String)
 
 fun main() {
-    embeddedServer(Netty, 8080) {
-        routing {
-            get("/isAlive") {
-                sjekkLivenessProbe(this)
+  embeddedServer(Netty, 8080) {
+      install(ContentNegotiation) {
+          json() // Configures kotlinx.serialization for JSON
+      }
+            routing {
+              post("/notify") { varsling(this) }
+              get("/isAlive") { sjekkLivenessProbe(this) }
+              get("/isReady") { sjekkReadinessProbe(this) }
             }
-            get("/isReady") {
-                sjekkReadinessProbe(this)
-            }
-        }
-    }.start(wait = true)
+          }
+          .start(wait = true)
 }
 
 val log: Logger = LoggerFactory.getLogger("main")
+
+fun varsling(context: RoutingContext) {
+    runBlocking {
+        val secret = context.call.receive<SecretMessage>()
+        log.info(secret.message)
+        context.call.respond(HttpStatusCode.OK)
+    }
+}
 
 fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")) {
     runBlocking {
