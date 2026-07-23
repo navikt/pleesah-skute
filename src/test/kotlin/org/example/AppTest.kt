@@ -102,7 +102,7 @@ class AppTest {
 
         val response = client.get("/isReady")
 
-        assertEquals(HttpStatusCode.ServiceUnavailable, response.status)
+        assertEquals(HttpStatusCode.NotImplemented, response.status)
     }
 
     private fun mockHttpClient(handler: MockRequestHandleScope.(HttpRequestData) -> HttpResponseData) =
