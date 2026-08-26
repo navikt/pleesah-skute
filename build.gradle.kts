@@ -1,5 +1,5 @@
 val ktorVersion = "3.5.1"
-val pleesahMainClass = "org.example.AppKt"
+val pleesahMainClass = "io.leesah.pleesah.AppKt"
 
 
 plugins {
@@ -49,7 +49,7 @@ tasks {
     register<JavaExec>("runMockHavnesjef") {
         group = "application"
         description = "Kjører en lokal test-dobbel for havnesjef.pleesah-system/teams"
-        mainClass.set("org.example.MockHavnesjefKt")
+        mainClass.set("io.leesah.pleesah.MockHavnesjefKt")
         classpath = sourceSets["test"].runtimeClasspath
     }
 
