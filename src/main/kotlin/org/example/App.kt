@@ -1,17 +1,17 @@
 package org.example
 
 import io.ktor.client.*
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.HttpRequestTimeoutException
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.json
-import io.ktor.server.application.install
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.server.request.receive
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.runBlocking
@@ -26,17 +26,17 @@ data class SecretMessage(val message: String)
 private var teller = 0
 
 fun main() {
-  embeddedServer(Netty, 8080) {
-      install(ContentNegotiation) {
-          json() // Configures kotlinx.serialization for JSON
-      }
-            routing {
-              post("/notify") { varsling(this) }
-              get("/isAlive") { sjekkLivenessProbe(this) }
-              get("/isReady") { sjekkReadinessProbe(this) }
-            }
-          }
-          .start(wait = true)
+    embeddedServer(Netty, 8080) {
+        install(ContentNegotiation) {
+            json() // Configures kotlinx.serialization for JSON
+        }
+        routing {
+            post("/notify") { varsling(this) }
+            get("/isAlive") { sjekkLivenessProbe(this) }
+            get("/isReady") { sjekkReadinessProbe(this) }
+        }
+    }
+        .start(wait = true)
 }
 
 val log: Logger = LoggerFactory.getLogger("main")
@@ -49,7 +49,10 @@ fun varsling(context: RoutingContext) {
     }
 }
 
-fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")) {
+fun sjekkLivenessProbe(
+    context: RoutingContext,
+    harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
+) {
     runBlocking {
         if (harKastetLoss == "true") {
             context.call.respond(HttpStatusCode.OK)
@@ -69,9 +72,11 @@ fun sjekkReadinessProbe(
     harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
-        if (harKastetLoss == "true" ) {
+        if (harKastetLoss == "true") {
             if (teller == 0) {
-                log.info("Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. ")
+                log.info(
+                    "Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. "
+                )
                 teller++
             }
             try {
@@ -101,8 +106,8 @@ fun sjekkSecret() {
         log.info("Kursen er satt og du er endelig på vei til din destinasjon!")
     } else {
         log.info(
-            "Oppgave 6: Hurra! Du har kastet loss og er klar til å plyndre! Men hvor skal vi, egentlig? " + "Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i dette tilfellet finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig destinasjon. Gå tilbake til oppgavearket og følg instruksjonene. Skip o’hoi!"
+            "Oppgave 6: Hurra! Du har kastet loss og er klar til å plyndre! Men hvor skal vi, egentlig? " +
+                    "Koordinatene finner du i en hemmelighet! I K8s kan hemmeligheter lagres i ressurstypen secrets. Disse kan inneholde forskjellig typer data, men i dette tilfellet finnes det kun én nøkkel skuta trenger for å sette kurs mot riktig destinasjon. Gå tilbake til oppgavearket og følg instruksjonene. Skip o’hoi!"
         )
     }
 }
-
