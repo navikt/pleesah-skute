@@ -55,7 +55,8 @@ fun sjekkLivenessProbe(context: RoutingContext, harKastetLoss: String? = System.
             context.call.respond(HttpStatusCode.OK)
         } else {
             log.info(
-                "Oppgave 4: Skuta er fortsatt fortøyd til havna og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Skuta krever at en miljøvariabel HAR_KASTET_LOSS " + "er satt til 'true'. Gå tilbake til oppgavearket og trykk videre til neste oppgave"
+                "Skuta er fortsatt fortøyd til havna, og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Skuta krever at en miljøvariabel HAR_KASTET_LOSS " +
+                        "er satt til 'true'. Gå videre til neste oppgave"
             )
             context.call.respond(HttpStatusCode.NotImplemented)
         }
