@@ -1,4 +1,4 @@
-package org.example
+package io.leesah.pleesah
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*

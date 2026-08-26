@@ -1,2 +1,3 @@
-# pleesah-skute
-Skute for pleesah
+# Pleesah skute
+
+Skute for Kubernetes spillet Pleesah.
