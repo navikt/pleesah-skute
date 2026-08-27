@@ -2,6 +2,7 @@ package io.leesah.pleesah
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.network.sockets.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -18,7 +19,6 @@ import kotlinx.io.IOException
 import kotlinx.serialization.Serializable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.net.http.HttpConnectTimeoutException
 
 @Serializable
 data class SecretMessage(val message: String)
@@ -86,7 +86,7 @@ fun sjekkReadinessProbe(
                 } else {
                     context.call.respond(HttpStatusCode.ServiceUnavailable)
                 }
-            } catch (e: HttpConnectTimeoutException) {
+            } catch (e: ConnectTimeoutException) {
                 log.warn("Readiness probe feilet, har du husket å lage en network policy?", e)
                 context.call.respond(HttpStatusCode.ServiceUnavailable)
             } catch (e: IOException) {
