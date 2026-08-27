@@ -2,7 +2,6 @@ package io.leesah.pleesah
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -19,6 +18,7 @@ import kotlinx.io.IOException
 import kotlinx.serialization.Serializable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.net.http.HttpConnectTimeoutException
 
 @Serializable
 data class SecretMessage(val message: String)
@@ -86,11 +86,11 @@ fun sjekkReadinessProbe(
                 } else {
                     context.call.respond(HttpStatusCode.ServiceUnavailable)
                 }
-            } catch (e: HttpRequestTimeoutException) {
-                log.warn("Readiness-kallet mot leesah.io/kubernetes timet ut", e)
+            } catch (e: HttpConnectTimeoutException) {
+                log.warn("Readiness probe feilet, har du husket å lage en network policy?", e)
                 context.call.respond(HttpStatusCode.ServiceUnavailable)
             } catch (e: IOException) {
-                log.warn("Readiness-kallet mot leesah.io/kubernetes feilet", e)
+                log.warn("Readiness probe feilet med en ukjent feil", e)
                 context.call.respond(HttpStatusCode.ServiceUnavailable)
             }
         } else {
