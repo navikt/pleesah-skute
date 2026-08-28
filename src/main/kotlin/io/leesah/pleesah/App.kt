@@ -58,7 +58,8 @@ fun sjekkLivenessProbe(
             context.call.respond(HttpStatusCode.OK)
         } else {
             log.info(
-                "Skuta er fortsatt fortøyd til havna, og er ikke klar til å seile til sjøs. Du må kaste loss slik at skuta er klar for å seile. Skuta krever at en miljøvariabel HAR_KASTET_LOSS " +
+                "Oppgave 4: Skuta er fortsatt fortøyd til havna, og er ikke klar til å seile til sjøs. Du må kaste " +
+                        "loss slik at skuta er klar for å seile. Skuta krever at en miljøvariabel HAR_KASTET_LOSS " +
                         "er satt til 'true'. Gå videre til neste oppgave"
             )
             context.call.respond(HttpStatusCode.NotImplemented)
@@ -75,7 +76,7 @@ fun sjekkReadinessProbe(
         if (harKastetLoss == "true") {
             if (teller == 0) {
                 log.info(
-                    "Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave. "
+                    "Oppgave 4: Hurra! Du har kastet loss og er klar til å plyndre! Gå videre til neste oppgave."
                 )
                 teller++
             }
