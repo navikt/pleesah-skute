@@ -3,6 +3,7 @@ package io.leesah.pleesah
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.network.sockets.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -41,6 +42,14 @@ fun main() {
 
 val log: Logger = LoggerFactory.getLogger("main")
 
+private val httpClient = HttpClient(CIO) {
+    install(HttpTimeout) {
+        requestTimeoutMillis = 3000
+        connectTimeoutMillis = 1000
+        socketTimeoutMillis = 2000
+    }
+}
+
 fun varsling(context: RoutingContext) {
     runBlocking {
         val secret = context.call.receive<SecretMessage>()
@@ -69,7 +78,7 @@ fun sjekkLivenessProbe(
 
 fun sjekkReadinessProbe(
     context: RoutingContext,
-    client: HttpClient = HttpClient(CIO),
+    client: HttpClient = httpClient,
     harKastetLoss: String? = System.getenv("HAR_KASTET_LOSS")
 ) {
     runBlocking {
@@ -87,8 +96,11 @@ fun sjekkReadinessProbe(
                 } else {
                     context.call.respond(HttpStatusCode.ServiceUnavailable)
                 }
+            } catch (e: HttpRequestTimeoutException) {
+                log.warn("Readiness probe fikk tidsavbrutt, har du husket å lage en network policy?", e)
+                context.call.respond(HttpStatusCode.ServiceUnavailable)
             } catch (e: ConnectTimeoutException) {
-                log.warn("Readiness probe feilet, har du husket å lage en network policy?", e)
+                log.warn("Readiness probe fikk tidsavbrutt under tilkobling, har du husket å lage en network policy?", e)
                 context.call.respond(HttpStatusCode.ServiceUnavailable)
             } catch (e: IOException) {
                 log.warn("Readiness probe feilet med en ukjent feil", e)
